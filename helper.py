@@ -2,7 +2,11 @@ import torch
 import numpy as np
 #from transformers import GPT2Tokenizer
 from typing import  Callable, Dict, List, Optional, Tuple, Union
+import importlib
+import andante.collections  # adjust according to your actual module import
+importlib.reload(andante.collections)
 from andante.collections import OrderedSet
+
 from flwr.common import (
     Parameters,
     Code,
@@ -84,6 +88,15 @@ def get_parameters(results:OrderedSet) -> List[np.ndarray]:
         return parameters_to_ndarrays(parameters)
 
 
+def text_to_ordered_set(text: str) -> 'OrderedSet':
+    lines = text.strip().split('\n')
+    ordered_set = OrderedSet()
+    for line in lines:
+        line = line.strip()
+        if line:
+            ordered_set.add(line)
+    return ordered_set
+
 def set_parameters(ilp: AndanteProgram , parameters: List[np.ndarray]):
     """ Set the parameters for the ILP """
     if parameters and len(parameters) > 0:
@@ -95,7 +108,7 @@ def set_parameters(ilp: AndanteProgram , parameters: List[np.ndarray]):
     #convert tensors to text 
     text = tensor_to_text(tensor_value)
     #convert text to OrderedSet 
-    ilp.results = OrderedSet.text_to_ordered_set(text)
+    ilp.results = text_to_ordered_set(text)
 
 
 def aggregate_fedilp(results: List[Tuple[np.ndarray, int]]) -> np.ndarray:

@@ -1,0 +1,2 @@
+andante @ git+https://github.com/YasminAkaichi/Andante@main
+flwr @ git+https://github.com/YasminAkaichi/flower.git#egg=flwr
