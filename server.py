@@ -1,8 +1,5 @@
 import flwr as fl;
-import sys; 
-import numpy as np;
 from flwr.server.strategy.fedilp import FedILP
-
 
 # Create strategy and run server
 strategy = FedILP()
